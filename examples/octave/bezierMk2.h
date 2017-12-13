@@ -13,6 +13,7 @@ class point2d_t : public std::tuple<double, double>
 public:
     typedef std::tuple<double, double> papa_t;
     point2d_t(double d0, double d1) : papa_t(d0, d1) {}
+    point2d_t() : papa_t(0, 0) {}
 
     virtual std::string to_string() const {
         return "{" + std::to_string(std::get<0>(*this)) + "," + std::to_string(std::get<1>(*this)) + "}";
