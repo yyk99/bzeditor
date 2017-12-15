@@ -14,5 +14,6 @@ add_executable(plot_b6 plot_b6.cc)
 target_link_libraries(plot_b6 bzoctave)
 
 qt5_use_modules(plot_b6 Widgets)
+set_target_properties(plot_b6 bzoctave PROPERTIES FOLDER "examples")
 
 # end of file
