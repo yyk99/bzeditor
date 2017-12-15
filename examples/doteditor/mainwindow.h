@@ -7,6 +7,7 @@ namespace Ui {
 	class MainWindow;
 }
 
+class DrawingPanel;
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
@@ -20,6 +21,7 @@ private slots:
 
 private:
 	Ui::MainWindow *ui;
+    DrawingPanel *m_drawingPanel;
 };
 
 #endif // MAINWINDOW_H
