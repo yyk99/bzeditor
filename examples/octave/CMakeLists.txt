@@ -5,8 +5,6 @@
 cmake_minimum_required(VERSION 3.2)
 project (octave_examples)
 
-#find_package(Qt5Core)
-#find_package(Qt5Gui)
 find_package(Qt5Widgets)
 
 add_library(bzoctave STATIC bezierMk2.cc bezierMk2.h CoordinateTransformator.h CoordinateTransformator.cc Plotter.cc Plotter.h)
