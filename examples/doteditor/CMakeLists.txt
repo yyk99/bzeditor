@@ -1,6 +1,9 @@
 #
 #
 #
+#
+#
+#
 
 find_package(Qt5Widgets)
 
@@ -20,6 +23,7 @@ add_executable(doteditor
 	drawingpanel.cpp
 	drawingpanel.h
 	${UI_HEADERS}
+	bezierMk2.cc bezierMk2.h
 	)
 qt5_use_modules(doteditor Widgets)
 set_property(SOURCE ${UI_HEADERS} PROPERTY SKIP_AUTOMOC ON)
