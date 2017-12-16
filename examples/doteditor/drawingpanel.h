@@ -28,6 +28,16 @@ protected:
 
 	virtual void mousePressEvent(QMouseEvent *event) override;
 	virtual void mouseDoubleClickEvent(QMouseEvent *event) override;
+	virtual void contextMenuEvent(QContextMenuEvent *event) override;
+
+	private slots:
+	void on_actionEndLine_triggered();
+
+private:
+	void createActions();
+
+private:
+	QAction *m_actionEndLine;
 
 private:
 	QCursor m_savedCursor;

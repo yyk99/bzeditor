@@ -42,3 +42,5 @@ void MainWindow::on_actionAbout_triggered()
 		tr("Example Bezier curve editor\n"
 			"yyk (c) 2017"));
 }
+
+// end of file

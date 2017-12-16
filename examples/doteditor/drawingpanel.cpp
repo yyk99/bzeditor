@@ -6,11 +6,13 @@
 #include "bezierMk2.h"
 
 #include <iostream>
+#include <list>
 
 #include <QPainter>
 #include <QDebug>
-
-#include <list>
+#include <QAction>
+#include <QMenu>
+#include <QMouseEvent>
 #include <QPoint>
 
 class Model {
@@ -43,6 +45,8 @@ private:
 
 DrawingPanel::DrawingPanel(QWidget *papa /*= 0*/) : QWidget(papa), m_model()
 {
+	createActions();
+
 	m_savedCursor = this->cursor();
 	m_model = new Model();
 }
@@ -127,8 +131,6 @@ void DrawingPanel::leaveEvent(QEvent *event)
 	setCursor(m_savedCursor);
 }
 
-#include <QMouseEvent>
-
 void DrawingPanel::mousePressEvent(QMouseEvent *e)
 {
 	if (e->button() == Qt::MouseButton::LeftButton) {
@@ -143,7 +145,32 @@ void DrawingPanel::mouseDoubleClickEvent(QMouseEvent *e)
 	update();
 }
 
+void DrawingPanel::contextMenuEvent(QContextMenuEvent *e)
+{
+	qDebug() << "contextMenuEvent...";
+
+	QMenu menu(this);
+	menu.addAction(m_actionEndLine);
+	menu.addAction(m_actionEndLine);
+	menu.addAction(m_actionEndLine);
+	menu.exec(e->globalPos());
+}
+
 QPointF DrawingPanel::make_QPointF(point2d_t const &p)
 {
 	return QPointF(std::get<0>(p), std::get<1>(p));
+}
+
+void DrawingPanel::createActions()
+{
+	m_actionEndLine = new QAction(tr("End"), this);
+	m_actionEndLine->setShortcuts(QKeySequence::Cut);
+	m_actionEndLine->setStatusTip(tr("Cut the current selection's contents to the "
+		"clipboard"));
+	connect(m_actionEndLine, &QAction::triggered, this, &DrawingPanel::on_actionEndLine_triggered);
+}
+
+void DrawingPanel::on_actionEndLine_triggered()
+{
+	qDebug() << "on_actionEndLine_triggered...";
 }
