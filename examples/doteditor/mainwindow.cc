@@ -6,20 +6,7 @@
 #include "ui_mainwindow.h"
 
 #include <iostream>
-
-class DrawingPanel : public QWidget
-{
-public:
-    DrawingPanel(QWidget *papa = 0) : QWidget(papa) {
-    }
-
-protected:
-    virtual void resizeEvent(QResizeEvent *evnt) override
-    {
-        std::cout << "Resize event..." << std::endl;
-        QWidget::resizeEvent(evnt);
-    }
-};
+#include "drawingpanel.h"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent)
@@ -27,7 +14,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ,m_drawingPanel()
 {
 	ui->setupUi(this);
-    m_drawingPanel = new DrawingPanel(ui->m_drawing_container);
 }
 
 MainWindow::~MainWindow()
