@@ -52,6 +52,12 @@ DrawingPanel::~DrawingPanel()
 	delete m_model;
 }
 
+void DrawingPanel::startOver()
+{
+	m_model->clear();
+	update();
+}
+
 void DrawingPanel::resizeEvent(QResizeEvent *evnt)
 {
 	qDebug() << "Resize event...";

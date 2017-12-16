@@ -18,11 +18,11 @@ public:
 
 private slots:
 	void on_actionExit_triggered();
+	void on_actionNew_triggered();
 	void on_actionAbout_triggered();
 
 private:
 	Ui::MainWindow *ui;
-    DrawingPanel *m_drawingPanel;
 };
 
 #endif // MAINWINDOW_H

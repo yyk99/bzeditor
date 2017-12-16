@@ -16,6 +16,9 @@ public:
     DrawingPanel(QWidget *papa = 0);
 	virtual ~DrawingPanel();
 
+public:
+	virtual void startOver();
+
 protected:
     virtual void resizeEvent(QResizeEvent *) override;
 	virtual void paintEvent(QPaintEvent *) override;

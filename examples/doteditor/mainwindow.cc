@@ -12,7 +12,6 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	,ui(new Ui::MainWindow)
-    ,m_drawingPanel()
 {
 	ui->setupUi(this);
 	setWindowTitle(tr("doteditor"));
@@ -26,6 +25,11 @@ MainWindow::~MainWindow()
 void MainWindow::on_actionExit_triggered()
 {
 	this->close();
+}
+
+void MainWindow::on_actionNew_triggered()
+{
+	ui->m_drawingPanel->startOver();
 }
 
 #include <QMessageBox>
