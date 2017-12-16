@@ -8,6 +8,7 @@
 #include <QWidget>
 
 class Model;
+class point2d_t;
 class DrawingPanel : public QWidget
 {
 	Q_OBJECT
@@ -28,6 +29,8 @@ protected:
 private:
 	QCursor m_savedCursor;
 	Model *m_model;
+
+	QPointF make_QPointF(point2d_t const &p);
 };
 
 #endif // DRAWINGPANEL_H

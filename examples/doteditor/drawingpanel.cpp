@@ -3,6 +3,7 @@
 //
 
 #include "drawingpanel.h"
+#include "bezierMk2.h"
 
 #include <iostream>
 
@@ -33,10 +34,12 @@ public:
 	std::list<QPoint>::const_iterator end() const { 
 		return m_clicks.end(); 
 	}
+	size_t size() const {
+		return m_clicks.size();
+	}
 private:
 	std::list<QPoint> m_clicks;
 };
-
 
 DrawingPanel::DrawingPanel(QWidget *papa /*= 0*/) : QWidget(papa), m_model()
 {
@@ -51,18 +54,15 @@ DrawingPanel::~DrawingPanel()
 
 void DrawingPanel::resizeEvent(QResizeEvent *evnt)
 {
-	std::cout << "Resize event..." << std::endl;
+	qDebug() << "Resize event...";
 	QWidget::resizeEvent(evnt);
 }
 
 void DrawingPanel::paintEvent(QPaintEvent *event)
 {
-	std::cout << "w=" << this->width() << ", h=" << this->height() << std::endl;
-
-
+	qDebug() << "w =" << this->width() << "h =" << this->height();
 
 	QPainter painter(this);
-
 
 	painter.setPen(Qt::red);
 	int margin = 0;
@@ -74,17 +74,38 @@ void DrawingPanel::paintEvent(QPaintEvent *event)
 		painter.drawRect(QRect(p - QPoint(2,2), p + QPoint(2,2)));
 	}
 
-	painter.setPen(Qt::black);
-	QPainterPath path;
-	int count = 0;
-	for (QPoint p : *m_model) {
-		++count;
-		if (count == 1)
-			path.moveTo(p);
-		else
-			path.lineTo(p);
+	{
+		QPainterPath path;
+		int count = 0;
+		for (QPoint p : *m_model) {
+			++count;
+			if (count == 1)
+				path.moveTo(p);
+			else
+				path.lineTo(p);
+		}
+		painter.setPen(Qt::black);
+		painter.drawPath(path);
 	}
-	painter.drawPath(path);
+
+	if(m_model->size() > 2){
+		const int N = 300;
+		std::vector<point2d_t> controls; controls.reserve(m_model->size());
+		for (QPoint p : *m_model)
+			controls.push_back(point2d_t(p.x(), p.y()));
+
+		QPainterPath path;
+		for (int i = 0; i <= N; ++i) {
+			double u = 1.0 / N * i;
+			QPointF p = make_QPointF(bezierMk2(u, controls));
+			if (i == 0)
+				path.moveTo(p);
+			else
+				path.lineTo(p);
+		}
+		painter.setPen(Qt::green);
+		painter.drawPath(path);
+	}
 }
 
 void DrawingPanel::enterEvent(QEvent *event)
@@ -114,4 +135,9 @@ void DrawingPanel::mouseDoubleClickEvent(QMouseEvent *e)
 {
 	m_model->clear();
 	update();
+}
+
+QPointF DrawingPanel::make_QPointF(point2d_t const &p)
+{
+	return QPointF(std::get<0>(p), std::get<1>(p));
 }
